@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "266657238088",
+    "project_id": "learning-app-26a91",
+    "storage_bucket": "learning-app-26a91.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266657238088:android:6e3e47b8e0059d4f4b1c7d",
+        "android_client_info": {
+          "package_name": "com.morizuq.bloc_learning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266657238088-fodt0mg5itnc7dmcng1f41r1cretk1pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ9gBQTmpxhOaoU8Bbt-wyrJmIMyslGMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266657238088-fodt0mg5itnc7dmcng1f41r1cretk1pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
