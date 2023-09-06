@@ -1,4 +1,5 @@
 // import 'package:bloc_learning/app_event.dart';
+import 'package:bloc_learning/pages/signin/bloc/signin_bloc.dart';
 import 'package:bloc_learning/pages/signin/signin.dart';
 import 'package:bloc_learning/pages/welcome/bloc/welcome_blocs.dart';
 import 'package:bloc_learning/pages/welcome/welcome.dart';
@@ -14,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  
+
   runApp(const MyApp());
 }
 
@@ -27,10 +28,15 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          lazy: false,
           create: (context) => WelcomeBloc(),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => AppBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SignInBloc(),
         )
       ],
       child: ScreenUtilInit(

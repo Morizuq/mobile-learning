@@ -1,6 +1,12 @@
+import 'package:bloc_learning/pages/signin/bloc/signin_bloc.dart';
+import 'package:bloc_learning/pages/signin/bloc/signin_events.dart';
+import 'package:bloc_learning/pages/signin/signin_controller.dart';
 import 'package:bloc_learning/pages/signin/widgets/signin_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'bloc/signin_states.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -12,44 +18,60 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-          child: Scaffold(
-              backgroundColor: Colors.white,
-              appBar: buildAppBar(),
-              body: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildThirdPartyLogin(context),
-                      Center(child: reusableText("or login with your email")),
-                      Container(
-                        margin: EdgeInsets.only(top: 36.h),
-                        padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            reusableText("Email"),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            buildTextField(
-                                "Enter your email address", "email", "user"),
-                            reusableText("Password"),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            buildTextField(
-                                "Enter your password", "password", "lock"),
-                            forgotPassword(),
-                            buildLoginAndSignupButton("Log In", "login"),
-                            buildLoginAndSignupButton("Sign Up", "signup")
-                          ],
-                        ),
-                      )
-                    ]),
-              ))),
-    );
+    return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+      return Container(
+        color: Colors.white,
+        child: SafeArea(
+            child: Scaffold(
+                backgroundColor: Colors.white,
+                appBar: buildAppBar(),
+                body: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildThirdPartyLogin(context),
+                        Center(child: reusableText("Or login with your email")),
+                        Container(
+                          margin: EdgeInsets.only(top: 36.h),
+                          padding: EdgeInsets.only(left: 25.w, right: 25.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              reusableText("Email"),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              buildTextField(
+                                  "Enter your email address",
+                                  "email",
+                                  "user",
+                                  (value) => context
+                                      .read<SignInBloc>()
+                                      .add(EmailEvent(value))),
+                              reusableText("Password"),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              buildTextField(
+                                  "Enter your password",
+                                  "password",
+                                  "lock",
+                                  (value) => context
+                                      .read<SignInBloc>()
+                                      .add(PasswordEvent(value))),
+                              forgotPassword(),
+                              buildLoginAndSignupButton("Log In", "login", () {
+                                SignInController(context: context)
+                                    .handleSignIn('email');
+                              }),
+                              buildLoginAndSignupButton(
+                                  "Sign Up", "signup", () {})
+                            ],
+                          ),
+                        )
+                      ]),
+                ))),
+      );
+    });
   }
 }

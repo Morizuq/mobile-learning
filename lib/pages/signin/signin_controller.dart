@@ -15,29 +15,45 @@ class SignInController {
         String emailAddress = state.email;
         String password = state.password;
 
-        if (emailAddress.isEmpty) {}
-        if (password.isEmpty) {}
+        if (emailAddress.isEmpty) {
+          print("email is empty");
+        }
+        if (password.isEmpty) {
+          print("password is empty");
+        }
 
         try {
           final credential = await FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: emailAddress, password: password);
-                  if(credential.user == null){}
-                  if(!credential.user!.emailVerified){
-                    //
-                  }
+          if (credential.user == null) {
+            print("user does not exist");
+          }
+          if (!credential.user!.emailVerified) {
+            print("not verified");
+          }
 
-                  var user = credential.user;
+          var user = credential.user;
 
-                  if(user!=null){
-                    //Got verified user from firebase
-                  }
-        } catch (err) {
-          //Error getting user from firebase 
+          if (user != null) {
+            //Got verified user from firebase
+            print("user exist");
+          } else {
+            print("user does not exist");
+          }
+        } on FirebaseAuthException catch (err) {
+          //Error getting user from firebase
+          if (err.code == 'user-not-found') {
+            print("User not found");
+          } else if (err.code == 'wrong-password') {
+            print("Wrong password!!😆😆");
+          } else if (err.code == 'invalid-email') {
+            print("Incorrect Email");
+          }
         }
       }
     } catch (err) {
-      //Error Signing In 
+      //Error Signing In
     }
   }
 }
